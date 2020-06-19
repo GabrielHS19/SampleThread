@@ -13,16 +13,24 @@ import javax.swing.JTextField;
  *
  * @author gabrielhs
  */
-public class ContadorHilo implements Runnable{
+public class ContadorHilo extends Thread{
 private JTextField txtV;
+private boolean isRun;
+
     public ContadorHilo(JTextField txtV) {
         this.txtV=txtV;
     }
+    
+    public synchronized void detener(){
+    isRun=false;
+}
 
     @Override
     public void run() {
-        while(true){
+        isRun=true;
+        while(isRun){
             long v= Long.parseLong(txtV.getText());
+           
             v++;
             txtV.setText(String.valueOf(v));
             try {
